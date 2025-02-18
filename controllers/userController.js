@@ -12,15 +12,18 @@ const register = async (req, res) => {
     }
     try {
         const { username, email, password } = req.body;
+
         let user = await User.findOne({ email });
         if (user) return res.status(400).json({ msg: 'User already exists' });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // 🔹 Hash the password before saving
+        const salt = await bcrypt.genSalt(10); // Generate salt
+        const hashedPassword = await bcrypt.hash(password, salt); // Hash password
+
         user = new User({ username, email, password: hashedPassword });
         await user.save();
 
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(201).json({ msg: 'User registered successfully', token });
+        res.status(201).json({ msg: 'User registered successfully' });
     } catch (err) {
         res.status(500).json({ msg: 'Server error', error: err.message });
     }
