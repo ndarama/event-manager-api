@@ -6,7 +6,7 @@
         "description": "API for managing events, users, RSVPs, and categories"
     },
     "servers": [
-        { "url": "http://localhost:5001" }
+        { "url": "event-manager-api-8x3w.onrender.com" }
     ],
     "paths": {
         "/api/events": {

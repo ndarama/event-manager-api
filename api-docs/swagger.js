@@ -10,7 +10,7 @@ const swaggerOptions = {
             version: '1.0.0',
             description: 'API for managing events, users, RSVPs, and categories',
         },
-        servers: [{ url: 'http://localhost:5001' }],
+        servers: [{ url: 'event-manager-api-8x3w.onrender.com' }],
     },
     apis: ['./routes/*.js'],
 };
