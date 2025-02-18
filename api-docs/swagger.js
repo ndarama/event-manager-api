@@ -10,7 +10,8 @@ const swaggerOptions = {
             version: '1.0.0',
             description: 'API for managing events, users, RSVPs, and categories',
         },
-        servers: [{ url: 'event-manager-api-8x3w.onrender.com' }],
+        host: "event-manager-api-8x3w.onrender.com",
+        schemes: ["https"],
     },
     apis: ['./routes/*.js'],
 };
