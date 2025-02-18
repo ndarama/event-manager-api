@@ -1,0 +1,87 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Event Manager API",
+        "version": "1.0.0",
+        "description": "API for managing events, users, RSVPs, and categories"
+    },
+    "servers": [
+        { "url": "http://localhost:5001" }
+    ],
+    "paths": {
+        "/api/events": {
+            "get": {
+                "summary": "Get all events",
+                "tags": ["Events"],
+                "responses": {
+                    "200": {
+                        "description": "List of events",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Event"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new event",
+                "tags": ["Events"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": { "type": "string" },
+                                    "description": { "type": "string" },
+                                    "date": { "type": "string", "format": "date-time" },
+                                    "location": { "type": "string" },
+                                    "category": { "type": "string" }
+                                },
+                                "required": ["name", "date", "location"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Event created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request data"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "Event": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "date": { "type": "string", "format": "date-time" },
+                    "location": { "type": "string" },
+                    "category": { "type": "string" }
+                }
+            }
+        }
+    }
+}
