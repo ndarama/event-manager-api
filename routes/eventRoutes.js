@@ -1,6 +1,7 @@
 // routes/eventRoutes.js
 const express = require('express');
 const { check, validationResult } = require('express-validator');
+const auth = require('../middleware/auth'); 
 const { createEvent, getEvents, getEventById, updateEvent, deleteEvent } = require('../controllers/eventController');
 
 const router = express.Router();
@@ -41,7 +42,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.post('/', [
+router.post('/', auth, [
     check('title', 'Event title is required').not().isEmpty(),
     check('description', 'Event description is required').not().isEmpty(),
     check('date', 'Valid date is required').isISO8601(),
@@ -133,7 +134,7 @@ router.get('/:id', getEventById);
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateEvent);
+router.put('/:id', auth, updateEvent);
 
 /**
  * @swagger
@@ -156,6 +157,6 @@ router.put('/:id', updateEvent);
  *       500:
  *         description: Server error
  */
-router.delete('/:id', deleteEvent);
+router.delete('/:id', auth, deleteEvent);
 
 module.exports = router;
